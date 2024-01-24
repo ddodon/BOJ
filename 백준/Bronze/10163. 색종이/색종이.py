@@ -9,7 +9,7 @@ for t in range(1,n+1): #n번 색종이 쌓기
     a,b,c,d = map(int,input().split())
     for i in range(d):
         for j in range(c):
-            arr[a+i][b+j] = t
+            arr[a+j][b+i] = t
 for t in range(1,n+1):
     sm = 0 #색종이 넓이
     for i in range(len(arr)):
