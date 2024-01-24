@@ -1,5 +1,5 @@
 n = int(input())
-if n<=10:
+if n > 1 and n<=10:
     arr = [[0]*101 for _ in range(101)]
 else:
     arr = [[0]*1001 for _ in range(1001)]
