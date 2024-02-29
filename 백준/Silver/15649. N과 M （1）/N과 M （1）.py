@@ -1,11 +1,16 @@
-def dfs(n,tlst):
+def dfs(n, tlst):
     if n == M:
         print(*tlst)
         return
-    for j in range(1,N+1):
-        if j not in tlst: #중복 제거
-            dfs(n+1,tlst+[j])
+
+    for i in range(N):
+        if v[i] == 0:
+            v[i]=1
+            tlst.append(i+1)
+            dfs(n+1,tlst)
+            tlst.pop(-1)
+            v[i]=0
+
 N, M = map(int,input().split())
-lst = [i for i in range(1,N+1)]
-ans = []
-dfs(0,ans) # (root, answer)
+v = [0]*(N)
+dfs(0,[])
