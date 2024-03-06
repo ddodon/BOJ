@@ -7,7 +7,7 @@ dj = [1, -1, 0, 0]
 
 def attack(i, j, d):
     global cnt
-    if not (0 <= i < N and 0 <= j < M) or v[i][j] == 'F':
+    if (not (0 <= i < N and 0 <= j < M)) or v[i][j] == 'F':
         return
 
     if d == 'E':
@@ -22,7 +22,7 @@ def attack(i, j, d):
 
 def up(i, j):
     global cnt
-    if not (0 <= i < N and 0 <= j < M) or v[i][j] == 'S':
+    if (not (0 <= i < N and 0 <= j < M)) or v[i][j] == 'S':
         return
     else:
         v[i][j] = 'S'
@@ -39,7 +39,7 @@ def wave(i, j, k):
         for p in range(1, power):
             ni = ci + di[k] * p
             nj = cj + dj[k] * p
-            if 0 <= ni < N and 0 < nj < M:
+            if 0 <= ni < N and 0 <= nj < M:
                 if v[ni][nj] == 'S':
                     v[ni][nj] = 'F'
                     cnt += 1
@@ -58,10 +58,20 @@ for _ in range(R):
     X, Y = X - 1, Y - 1
     attack(X, Y, D)
 
+    # print("공격:", cnt)
+    # for lst in v:
+    #     print(*lst)
+    # print("////////////////")
+
     # 수비
     X, Y = map(int, input().split())
     X, Y = X - 1, Y - 1
     up(X, Y)
+
+    # print("수비")
+    # for lst in v:
+    #     print(*lst)
+    # print("////////////////")
 
 print(cnt)
 for lst in v:
