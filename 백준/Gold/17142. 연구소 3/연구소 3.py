@@ -3,8 +3,7 @@ from collections import deque
 di = [-1, 0, 1, 0]
 dj = [0, 1, 0, -1]
 
-
-def dfs(n, idx, tlst):
+def dfs(n, idx, tlst): # M개의 활성 바이러스 조합
     global ans
     if n == M:
         ans = min(ans, bfs(tlst))
@@ -13,11 +12,10 @@ def dfs(n, idx, tlst):
     for j in range(idx, len(virus)):
         if v[j] == 0:
             v[j] = 1
-            dfs(n + 1, j, tlst + [virus[j]])
+            dfs(n + 1, j+1, tlst + [virus[j]])
             v[j] = 0
 
-
-def bfs(act):
+def bfs(act): # 조합별 최소 시간 구하기
     q = deque()
     bfs_v = [[0] * N for _ in range(N)]
     for (ai, aj) in act:
@@ -39,19 +37,13 @@ def bfs(act):
                 elif arr[ni][nj] == 2:
                     bfs_v[ni][nj] = dist
                     q.append((ni, nj, dist + 1))
-    if remain:
-        return 21e8
-    else:
-        print(act)
-        print((max(map(max, bfs_v)) - 1))
-        print2(bfs_v)
-        return (max(map(max, bfs_v)) - 1)
+    return 21e8
 
 
 N, M = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 ans = 21e8
-blank = wall = 0
+blank = 0
 
 virus = []
 for i in range(N):
@@ -59,9 +51,7 @@ for i in range(N):
         if arr[i][j] == 0:
             blank += 1
         elif arr[i][j] == 2:
-            virus.append((i, j))
-        else:
-            wall += 1
+            virus.append((i, j)) # 빈칸과 바이러스의 좌표 담아두기
 v = [0] * (len(virus) + 1)
 if blank == 0:
     print(0)
