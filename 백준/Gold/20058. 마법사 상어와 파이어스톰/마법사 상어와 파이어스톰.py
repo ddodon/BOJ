@@ -1,15 +1,8 @@
+# 좌표기준 for문 전치행렬
 from collections import deque
 
 di = [-1, 0, 1, 0]
 dj = [0, 1, 0, -1]
-
-
-def trans(tmp, ci, cj):
-    tmp_t = [list(lst) for lst in zip(*tmp[::-1])]
-    for i in range(q):
-        for j in range(q):
-            arr[ci + i][cj + j] = tmp_t[i][j]
-
 
 def check(i, j):
     cnt = 0
@@ -20,7 +13,6 @@ def check(i, j):
             cnt += 1
     if cnt < 3:
         return (i, j)
-
 
 def bfs(si, sj):
     q = deque()
@@ -38,24 +30,23 @@ def bfs(si, sj):
                 v[ni][nj] = 1
     return cnt
 
-
 N, Q = map(int, input().split())
-arr = [list(map(int, input().split())) for _ in range(2 ** N)]
-arr_t = [list(lst) for lst in zip(*arr[::-1])]
+arr_b = [list(map(int, input().split())) for _ in range(2 ** N)]
+
 v = [[0] * (2 ** N) for _ in range(2 ** N)]
 ans1 = 0
 ans2 = 0
 qq = list(map(int, input().split()))
 
-for l in range(Q):
-    q = qq[l]
+for q in qq:
     q = 2 ** q
-    for i in range(0, 2 ** N, q):
-        for j in range(0, 2 ** N, q):
-            tmp = []
-            for lst in arr[i:i + q]:
-                tmp.append(lst[j:j + q])
-            trans(tmp, i, j)
+    arr = [[0] * (2 ** N) for _ in range(2 ** N)]
+    for si in range(0, 2 ** N, q):
+        for sj in range(0, 2 ** N, q):
+            for i in range(q):
+                for j in range(q):
+                    arr[si+i][sj+j] = arr_b[si+q-1-j][sj+i]
+
     non_ice = []
     for i in range(2 ** N):
         for j in range(2 ** N):
@@ -64,7 +55,8 @@ for l in range(Q):
         if loc:
             ci, cj = loc
             arr[ci][cj] -= 1
-            
+    arr_b = arr
+
 for i in range(2 ** N):
     for j in range(2 ** N):
         if arr[i][j] > 0 and v[i][j] == 0:

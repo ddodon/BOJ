@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 145468 KB, 시간: 1184 ms
+메모리: 157704 KB, 시간: 828 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 3월 11일 15:48:24
+2024년 3월 13일 00:24:29
 
 ### 문제 설명
 
@@ -23,9 +23,9 @@
 <table class="table table-bordered td-center td-middle" style="width:100%;">
 	<tbody>
 		<tr>
-			<td><img alt="" src="https://upload.acmicpc.net/68137f5d-fdbd-48c6-92f0-0a74ee53b0c2/-/preview/" style="width: 300px; height: 302px;"></td>
-			<td><img alt="" src="https://upload.acmicpc.net/4216e4de-a9f7-4bf0-9385-e20c583c1228/-/preview/" style="width: 300px; height: 302px;"></td>
-			<td><img alt="" src="https://upload.acmicpc.net/a58a4219-afc7-4f77-a194-a5495882eeb4/-/preview/" style="width: 300px; height: 300px;"></td>
+			<td><img alt="" src="" style="width: 300px; height: 302px;"></td>
+			<td><img alt="" src="" style="width: 300px; height: 302px;"></td>
+			<td><img alt="" src="" style="width: 300px; height: 300px;"></td>
 		</tr>
 		<tr>
 			<td>마법을 시전하기 전</td>
