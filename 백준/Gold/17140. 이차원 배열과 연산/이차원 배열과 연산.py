@@ -1,107 +1,67 @@
 from collections import defaultdict
 
 
-def check(arr):
-    n = len(arr)
-    m = len(arr[0])
-    if n >= m:
-        return 1
-    else:
-        return 0
-
-
-def r_cal(arr):
-    new_arr = [[] for _ in range(len(arr))]
-    for i in range(len(arr)):
+def r_opr(arr):
+    nrr = []
+    mx_row = len(arr)
+    mx_col = 0
+    for n, lst in enumerate(arr):
         dic = defaultdict(int)
-        for j in range(len(arr[i])):
-            if arr[i][j] == 0: continue
-            dic[arr[i][j]] += 1
-        tmp = []
-        for (k, v) in dic.items():
-            tmp.append((k, v))
-        tmp.sort(key=lambda x: (x[1], x[0]))
-        for (k, v) in tmp:
-            new_arr[i].append(k)
-            new_arr[i].append(v)
-    for i in range(len(new_arr)):
-        if len(new_arr[i]) > 100:
-            new_arr[i] = new_arr[:100]
-    return new_arr
+        for num in lst:
+            if num == 0: continue
+            dic[num] += 1
+        tmp = sorted(list(dic.items()), key=lambda x: (x[1], x[0]))
+        nlst = []
+        for k, v in tmp:
+            nlst.append(k)
+            nlst.append(v)
+        mx_col = max(mx_col, len(nlst))
+        nrr.append(nlst)
+    arr = [[0] * mx_col for _ in range(mx_row)]
+    for i in range(mx_row):
+        arr[i][:len(nrr[i])] = nrr[i][:100]
+    return arr
 
 
-def c_cal(arr):
-    new_arr = [[0] * (len(arr[0])) for _ in range(100)]
-    for i in range(len(arr[0])):
+def c_opr(arr):
+    arr = [list(lst) for lst in zip(*arr)]
+    nrr = []
+    mx_row = len(arr)
+    mx_col = 0
+    for n, lst in enumerate(arr):
         dic = defaultdict(int)
-        for j in range(len(arr)):
-            if arr[j][i] == 0: continue
-            dic[arr[j][i]] += 1
-        tmp = []
-        for (k, v) in dic.items():
-            tmp.append((k, v))
-        tmp.sort(key=lambda x: (x[1], x[0]))
-
-        for j in range(0, (len(tmp) * 2), 2):
-            (k, v) = tmp[j // 2]
-            new_arr[j][i] = k
-            new_arr[j + 1][i] = v
-    for i in range(len(new_arr) - 1, -1, -1):
-        if new_arr[i].count(0) == len(new_arr[0]):
-            new_arr.pop()
-        else:
-            break
-    return new_arr
-
-
-def r_fill(arr):
-    l = 0
-    for k in range(len(arr)):
-        l = max(len(arr[k]), l)
-    for i in range(len(arr)):
-        if len(arr[i]) < l:
-            for j in range(l - len(arr[i])):
-                arr[i].append(0)
-
-
-def c_fill(arr):
-    l = len(arr)
-    for i in range(l):
-        if len(arr[i]) < l:
-            for j in range(l - len(arr[i])):
-                arr[i].append(0)
+        for num in lst:
+            if num == 0: continue
+            dic[num] += 1
+        tmp = sorted(list(dic.items()), key=lambda x: (x[1], x[0]))
+        nlst = []
+        for k, v in tmp:
+            nlst.append(k)
+            nlst.append(v)
+        mx_col = max(mx_col, len(nlst))
+        nrr.append(nlst)
+    arr = [[0] * mx_col for _ in range(mx_row)]
+    for i in range(mx_row):
+        arr[i][:len(nrr[i])] = nrr[i][:100]
+    arr = [list(lst) for lst in zip(*arr)]
+    return arr
 
 
 r, c, k = map(int, input().split())
+r, c = r - 1, c - 1
 arr = [list(map(int, input().split())) for _ in range(3)]
-ans = 0
-
-while 1:
+for t in range(101):
+    # 1. 정답조건
     try:
-        if arr[r - 1][c - 1] == k:
+        if arr[r][c] == k:
+            print(t)
             break
     except:
         pass
-    if ans >= 100:
-        print(-1)
-        exit()
-    num = check(arr)
-    if num:
-        arr = r_cal(arr)
-        ans += 1
-        try:
-            if arr[r - 1][c - 1] == k:
-                break
-        except:
-            pass
-        r_fill(arr)
+    # 2. 행 열 길이 비교
+    if len(arr) >= len(arr[0]):
+        arr = r_opr(arr)
     else:
-        arr = c_cal(arr)
-        ans += 1
-        try:
-            if arr[r - 1][c - 1] == k:
-                break
-        except:
-            pass
-        c_fill(arr)
-print(ans)
+        arr = c_opr(arr)
+else:
+    print(-1)
