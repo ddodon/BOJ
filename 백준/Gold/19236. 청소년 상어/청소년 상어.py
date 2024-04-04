@@ -1,42 +1,26 @@
-# 총 시간: 
-# 문제 읽기
-# 풀이 구상: 
-# 로직 구현: 
-# 오류 수정: 
-# 제출 결과: 제한 시간 초과(/)
-# 오류 부분: 물고기 이동 시 방향 미적용
-from collections import defaultdict
-
 di = [-1, -1, 0, 1, 1, 1, 0, -1]
 dj = [0, -1, -1, -1, 0, 1, 1, 1]
 
 
-def move_fish(arr):
-    dic = defaultdict(list)  # 방향 / 행 / 열
-    nrr = [[l[:] for l in lst] for lst in arr]
-    for i in range(N):
-        for j in range(N):
-            if arr[i][j][0] > 0:
-                dic[arr[i][j][0]] = [arr[i][j][1], i, j]
-    fish = sorted((k for k in dic.keys()))
-    for fish_num in fish:
-        dir, ci, cj = dic[fish_num]
-        cnt = 0
-        while cnt < 8:
-            ni = ci + di[dir]
-            nj = cj + dj[dir]
-            if 0 <= ni < N and 0 <= nj < N and arr[ni][nj][0] != -1:
-                n_fish_num, n_dir = nrr[ni][nj]
-                nrr[ci][cj][1] = dir
-                nrr[ci][cj], nrr[ni][nj] = nrr[ni][nj], nrr[ci][cj]
-                dic[fish_num] = [dir, ni, nj]
-                dic[n_fish_num] = [n_dir, ci, cj]
-                break
-            else:
-                dir = (dir + 1) % 8
-                cnt += 1
-    return nrr
+def fish_move(arr, num):
+    for i in range(4):
+        for j in range(4):
+            if arr[i][j] and arr[i][j][0] == num:
+                fish, d = arr[i][j]
+                for k in range(len(di)):
+                    nd = (d + k) % 8
+                    ni = i + di[nd]
+                    nj = j + dj[nd]
+                    if 0 <= ni < 4 and 0 <= nj < 4 and (arr[ni][nj][0] == 0 or arr[ni][nj][0] != -1):
+                        arr[i][j] = [fish, nd]
+                        arr[i][j], arr[ni][nj] = arr[ni][nj], arr[i][j]
+                        return arr
+    return arr
 
+def play(arr):
+    for num in range(1, 17):
+        arr = fish_move(arr, num)
+    return arr
 
 def dfs(n, sm, arr):
     global ans
@@ -51,7 +35,7 @@ def dfs(n, sm, arr):
             arr[si][sj][0] = 0
             sm += arr[ci][cj][0]
             arr[ci][cj][0] = -1
-            dfs(n+1,sm,move_fish(arr))
+            dfs(n+1,sm,play(arr))
             arr = [[l[:] for l in lst] for lst in tmp_arr]
             can_eat, si, sj = eat(arr)
             ci, cj = can_eat[j]
@@ -82,6 +66,6 @@ for t in range(N):
 ans = 0
 ate_fish = arr[0][0][0]
 arr[0][0][0] = -1  # dead
-arr = move_fish(arr)
+arr = play(arr)
 dfs(0,ate_fish,arr)
 print(ans)
