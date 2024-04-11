@@ -72,7 +72,7 @@
 
 <p>여기서 크기가 2×1인 블록을 (2, 0), (3, 0)에 놓으면 <그림 10>과 같이 변한다. 파란색 보드는 1번 열에 블록이 생겨서 오른쪽으로 한 칸씩 이동한 상태이다.</p>
 
-<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/0fd074f1-72af-4ffe-95d0-038635b7a80c/-/preview/" style="width: 611px; height: 618px;"></p>
+<p style="text-align: center;"><img alt="" src="" style="width: 611px; height: 618px;"></p>
 
 <p style="text-align: center;"><그림 10></p>
 
